@@ -40,7 +40,7 @@ function Board() {
 
   return (
     <div>
-      <div>STATUS: {calculateStatus(winner, squares, nextValue)}</div>
+      <div className='status'>STATUS: {calculateStatus(winner, squares, nextValue)}</div>
       <div>
         {renderSquare(0)}
         {renderSquare(1)}
@@ -56,7 +56,6 @@ function Board() {
         {renderSquare(7)}
         {renderSquare(8)}
       </div>
-      <button onClick={restart}>Restart</button>
     </div>
   );
 }
@@ -112,10 +111,10 @@ function Game() {
 
   return (
     <div>
-      <div>
+      <div className='board'>
         <Board />
       </div>
-      <button onClick={restart}>Restart</button>
+      <button name='restart-button' onClick={restart}>Restart</button>
     </div>
   );
 }
