@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { GameProvider } from './GameContext';
 import { useGame } from './GameContext';
 
 function Board() {
-  const [squares, setSquares] = useState(Array(9).fill(null));
-  const [nextValue, setNextValue] = useState('X');
-  const [winner, setWinner] = useState(null);
+  const { squares, setSquares, nextValue, setNextValue, winner, setWinner } = useGame();
 
   function selectSquare(square) {
     if (squares[square] || winner) {
@@ -24,12 +22,6 @@ function Board() {
     }
   }
 
-  function restart() {
-    setSquares(Array(9).fill(null));
-    setNextValue('X');
-    setWinner(null);
-  }
-
   function renderSquare(i) {
     return (
       <button className="square" onClick={() => selectSquare(i)}>
@@ -40,7 +32,7 @@ function Board() {
 
   return (
     <div>
-      <div className='status'>STATUS: {calculateStatus(winner, squares, nextValue)}</div>
+      <div className='status'>{calculateStatus(winner, squares, nextValue)}</div>
       <div>
         {renderSquare(0)}
         {renderSquare(1)}
@@ -110,19 +102,39 @@ function Game() {
   };
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <div className='board'>
         <Board />
       </div>
-      <button name='restart-button' onClick={restart}>Restart</button>
+      <button className='restart-button' onClick={restart}>Restart</button>
     </div>
+  );  
+}
+
+function Header() {
+  return (
+    <header>
+      <h1>Tic Tac Toe Game</h1>
+    </header>
+  );
+}
+
+function Footer() {
+  return (
+    <footer>
+      <p>&copy; 2023 Beny Tic Tac Toe Game. All rights reserved.</p>
+    </footer>
   );
 }
 
 function App() {
   return (
     <GameProvider>
-      <Game />
+      <Header />
+      <div>
+        <Game />
+      </div>
+      <Footer />
     </GameProvider>
   );
 }
